@@ -17,7 +17,7 @@ function askQuestionThen(time) {
   question = questions[0]
   appendQuestion(question)
   return new Promise((resolve, reject) => {
-    setTimeout(()=> {resolve()}, time)
+    setTimeout((x)=> {resolve(x)}, time)
   })
 }
 
@@ -30,28 +30,39 @@ function removeQuestion() {
 
 function askQuestionThenRemoveQuestion(time) {
   // console.log(time);
-  appendQuestion(question)
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(removeQuestion())
-    }, time)
-  })
+  // appendQuestion(question)
+  // return new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     resolve(removeQuestion())}, time)
+  // })
+  return askQuestionThen(time).then(removeQuestion)
 }
 
 function trueAndFalseButtons() {
-  return document.querySelector('.true-false-list').querySelectorAll('.btn')
+  return buttons = document.querySelector('.true-false-list').querySelectorAll('.btn')
 }
 
 function toggleTrueAndFalseButtons() {
-  if (trueAndFalseButtons()[0].className.includes('hide') && trueAndFalseButtons()[1].className.includes('hide')) {
-    trueAndFalseButtons().forEach(btn => btn.classList.remove('hide'))
-  } else {
-    trueAndFalseButtons().forEach(btn => btn.classList.add('hide'))
-  }
+  trueAndFalseButtons().forEach(function(btn) {
+    // btn.classList.toggle("hide")
+
+    if (btn.className.includes('hide') === false) {
+      btn.classList.add('hide')
+      console.log('add hide');
+    } else {
+      btn.classList.remove('hide')
+      console.log('remove hide');
+    }
+  })
 }
 
 function displayQuestionOnClick(time) {
-  askQuestionThenRemoveQuestion(time)
-  toggleTrueAndFalseButtons()
+  // askQuestionThenRemoveQuestion(time)
+  // toggleTrueAndFalseButtons()
+  let btn = document.querySelector('a')
+  return btn.addEventListener('click', () => {
+    toggleTrueAndFalseButtons()
+    askQuestionThenRemoveQuestion(5000)
+ })
 
 }
